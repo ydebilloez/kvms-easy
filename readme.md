@@ -31,18 +31,18 @@ Typical use-cases are:
 Instructions for GUI applications:
 ----------------------------------
 
-create vm with: podman compose --file win7.yaml up
-stop it: podman stop win7
-start it again: podman start win7
+create vm with: `podman compose --file win7.yaml up`
+stop it: `podman stop win7`
+start it again: `podman start win7`
 
 win7 can be replaced by any of the .yaml files, e.g. macos11 or android10
 
 Instructions for command line tools:
 ------------------------------------
 
-create vm with: podman compose --file fedora-clang.yaml up --detach
-enter it with: podman exec -it fedora-clang /bin/bash
-stop it: podman stop fedora-clang
+create vm with: `podman compose --file fedora-clang.yaml up --detach`
+enter it with: `podman exec -it fedora-clang /bin/bash`
+stop it: `podman stop fedora-clang`
 
 Storage:
 --------
@@ -113,7 +113,7 @@ Change system as follows, add following line to `/etc/sysctl.conf`:
 ```
 net.ipv4.ip_unprivileged_port_start=445
 ```
-Now issue the following command: `sysctl -p`
+  Now issue the following command: `sysctl -p`
 
 - The samba share on the host system is not working yet.
 
@@ -144,6 +144,13 @@ Further reading and sources:
 
 Nothing would be possible without the foundation of these projects.
 
-https://github.com/qemus/qemu
-https://github.com/dockur/windows
-https://github.com/dockur/macos
+- https://github.com/qemus/qemu
+- https://github.com/dockur/windows
+- https://github.com/dockur/macos
+
+The belofte scripts are being used to compile one of my other projects
+that can be found here:
+
+- https://sourceforge.net/projects/belofte/
+
+_File last updated on 12/12/2025_
