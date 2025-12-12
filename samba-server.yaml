@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  fedora-minimal:
+    image: docker.io/servercontainers/samba
+    container_name: samba-server
+    network_mode: host
+    cap_add:
+      - CAP_NET_ADMIN
+    environment:
+      MODEL: TimeCapsule
+      AVAHI_NAME: Network disk
+
+      SAMBA_CONF_SERVER_STRING: NetworkDisk
+      SAMBA_CONF_MAP_TO_GUEST: Bad User
+
+      SAMBA_CONF_LOG_LEVEL: 3
+
+      GROUP_trustedusers: 1500
+      
+      ACCOUNT_sambauser: samba 
+      UID_sambauser: 1500
+      GROUPS_sambauser: trustedusers
+
+      ACCOUNT_sambauser1: samba 
+      UID_sambauser1: 1501
+      GROUPS_sambauser1: trustedusers
+
+      ACCOUNT_sambauser2: samba 
+      UID_sambauser2: 1502
+      GROUPS_sambauser2: trustedusers
+
+      SAMBA_VOLUME_CONFIG_guest: |
+        [guest]
+        path=/shares
+        read only = no
+        guest ok = yes
+        guest only = yes
+
+    volumes:
+      - ./data-disk:/share:Z

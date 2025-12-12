@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  qemu:
+    image: docker.io/budtmo/docker-android:emulator_9.0
+    container_name: android9
+    environment:
+      BOOT: "android9"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "5554:5554" # ADB port
+      - "5555:5555" # ADB port
+      - "6080:6080" # VNC port (if using VNC)
+    environment:
+      - EMULATOR_ARGS=-no-window -gpu swiftshader_indirect # Example emulator arguments
+      - ADB_PORT=5555
+    volumes:
+      - ./os-disk/android9:/storage
+    shm_size: '2gb' # Recommended for emulator performance
+    stop_grace_period: 2m

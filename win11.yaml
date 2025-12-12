@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  windows:
+    image: docker.io/dockurr/windows
+    container_name: win11
+    environment:
+      VERSION: "11"
+      RAM_SIZE: "8G"
+      CPU_CORES: "4"
+      REGION: "en-UK"
+      KEYBOARD: "en-UK"
+      USERNAME: "user"
+      PASSWORD: "User1234"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+      - 3389:3389/tcp
+      - 3389:3389/udp
+    volumes:
+      - ./os-disk/disk/win11:/storage
+      - ./data-disk:/shared
+    stop_grace_period: 2m

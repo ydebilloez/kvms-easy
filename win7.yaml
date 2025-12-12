@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  windows:
+    image: docker.io/dockurr/windows
+    container_name: win7
+    environment:
+      VERSION: "7u"
+      DISK_SIZE: "32G"
+      REGION: "en-UK"
+      KEYBOARD: "en-UK"
+      USERNAME: "user"
+      PASSWORD: "User1234"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+      - 3389:3389/tcp
+      - 3389:3389/udp
+    volumes:
+      - ./os-disk/win7:/storage
+      - ./data-disk:/shared
+    networks:
+      hostonly:
+        ipv4_address: 192.168.192.7
+    stop_grace_period: 2m
+
+networks:
+  hostonly:
+    driver: bridge

@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  fedora-minimal:
+    image: registry.fedoraproject.org/fedora-minimal:42
+    container_name: belofte-build
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./fedora-belofte-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
+      - ./data-disk:/home/hostuser:Z
+    entrypoint: ["container-initialconfig.sh"]
+    healthcheck:
+      # wait some time for installation
+      test: ["CMD", "test", "-f", "/var/run/container-initialconfig-ok"]
+      interval: 20s
+      timeout: 5s
+      retries: 180
+      start_period: 60s
+    command: 
+      - "/bin/bash"
+
+# check its installation with
+# podman healthcheck run belofte-build
+
+# run subsequently with
+# podman exec -it belofte-build /bin/bash

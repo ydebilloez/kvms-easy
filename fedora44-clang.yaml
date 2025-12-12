@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  fedora-minimal:
+    image: registry.fedoraproject.org/fedora-minimal:44
+    container_name: fedora44-clang
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./fedora-clang-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
+      - ./os-disk/fedclang:/workspace:Z
+      - ./data-disk:/home/hostuser:Z
+      - sharedstorage:/shared:Z
+    entrypoint: ["container-initialconfig.sh"]
+    healthcheck:
+      # wait for 5 minutes
+      test: ["CMD", "test", "-f", "/var/run/container-initialconfig-ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+      start_period: 10s
+    command: 
+      - "/bin/bash"
+
+volumes:
+  sharedstorage:
+    external: true
+    name: kvms_sharedstorage
+
+# check its installation with
+# podman healthcheck run fedora44-clang
+
+# run subsequently with
+# podman exec -it fedora44-clang /bin/bash

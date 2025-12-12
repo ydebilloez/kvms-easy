@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  windows:
+    image: docker.io/dockurr/windows
+    container_name: winxp
+    environment:
+      VERSION: "xp"
+      DISK_SIZE: "32G"
+      REGION: "en-UK"
+      KEYBOARD: "en-UK"
+      USERNAME: "user"
+      PASSWORD: "User1234"
+      USER_PORTS: "3389,8006"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+      - 3389:3389/tcp
+      - 3389:3389/udp
+    volumes:
+      - ./os-disk/winxp:/storage
+      - sharedstorage:/shared
+    stop_grace_period: 2m
+
+volumes:
+  sharedstorage:
