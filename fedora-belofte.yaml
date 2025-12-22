@@ -7,7 +7,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./fedora-belofte-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
+      - ./config/fedora-belofte-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
       - ./data-disk:/home/hostuser:Z
     entrypoint: ["container-initialconfig.sh"]
     healthcheck:
@@ -19,6 +19,9 @@ services:
       start_period: 60s
     command: 
       - "/bin/bash"
+
+x-podman:
+  in_pod: false
 
 # check its installation with
 # podman healthcheck run belofte-build

@@ -17,3 +17,6 @@ services:
     volumes:
       - ./os-disk/android11:/storage
     stop_grace_period: 2m
+
+x-podman:
+  in_pod: false

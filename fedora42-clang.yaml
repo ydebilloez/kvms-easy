@@ -7,19 +7,22 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./fedora-clang-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
-      - ./os-disk/fedclang:/workspace:Z
+      - ./config/fedora-clang-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
+      - ./os-disk/fedora42-clang:/workspace:Z
       - ./data-disk:/home/hostuser:Z
     entrypoint: ["container-initialconfig.sh"]
     healthcheck:
-      # wait for 5 minutes
+      # wait for 60 minutes
       test: ["CMD", "test", "-f", "/var/run/container-initialconfig-ok"]
-      interval: 10s
+      interval: 30s
       timeout: 5s
-      retries: 60
-      start_period: 10s
+      retries: 120
+      start_period: 60s
     command: 
       - "/bin/bash"
+
+x-podman:
+  in_pod: false
 
 # check its installation with
 # podman healthcheck run fedora42-clang

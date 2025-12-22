@@ -39,3 +39,6 @@ services:
 
     volumes:
       - ./data-disk:/share:Z
+
+x-podman:
+  in_pod: false

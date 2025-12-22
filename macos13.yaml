@@ -2,12 +2,12 @@ version: '3.8'
 
 services:
   macos:
-    image: docker.io/sickcodes/docker-osx:latest
-    container_name: macos10.15
+    image: docker.io/dockurr/macos
+    container_name: macos13
     environment:
-      VERSION: "3"
-      RAM_SIZE: "8G"
-      CPU_CORES: "4"
+      VERSION: "13"
+      RAM_SIZE: "9G"
+      CPU_CORES: "6"
     devices:
       - /dev/kvm
       - /dev/net/tun
@@ -18,5 +18,8 @@ services:
       - 5900:5900/tcp
       - 5900:5900/udp
     volumes:
-      - ./os-disk/macos10.15:/storage
+      - ./os-disk/macos13:/storage:Z
     stop_grace_period: 2m
+
+x-podman:
+  in_pod: false

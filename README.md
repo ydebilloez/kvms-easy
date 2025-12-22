@@ -6,8 +6,8 @@ Project brief:
 --------------
 
 The goal of this project is to leverage podman to create
-virtual machines for windows, macos, android and linux to run as a
-virtual container inside a linux host without the need to install a
+virtual machines for windows, macOS, android and Linux to run as a
+virtual container inside a Linux host without the need to install a
 fully fledged VM using virtualbox/parallels/....
 
 It is also possible to run containerised applications from command
@@ -16,8 +16,8 @@ line or GUI so not the spoil the host OS with lots of installations.
 It supports all processor types such as running ARM on x86 or running
 x86 on ARM which is not available with other VM solutions.
 
-Moreover, the host system can decide to share a folder amongst all
-virtual environments, share it's network connexion in bridged mode
+Moreover, the host system can decide to share a folder with all
+virtual environments, share it's network connection in bridged mode
 or create a host only network for local development.
 
 The VMs are accessible in a browser, on VNC, RDP, SSH or on command line.
@@ -27,22 +27,58 @@ Typical use-cases are:
 - Run a specific version of a compiler or apache web server.
 - Run a php development environment without installing php on the host
   system.
+- Run 2 different linux distributions next to each other
+  simultaneously.
+
+Project status:
+---------------
+
+_**Following are mainstream OS releases. For more systems, please look
+down to the legacy OS section.**_
+
+  | **Platform**  | **Status** | **Remarks** |
+  |---|---|---|
+  | Win10      | ✅   | |
+  | Win11      | ✅   | |
+  | macOS14    | ✅   | |
+  | macOS15    | ✅   | format disk as macOS extended, using APFS fails |
+  | macOS26    | ✅   | |
+  | android10  | ❌   | work still ongoing |
+  | android11  | ❌   | work still ongoing |
+  | linux gui  | ✅   | supports: fedora, mint, debian, arch, ubuntu, kali, ... |
+  | fedora42   | ✅✅ | clang belofte |
+  | fedora43   | ✅   | clang |
+  | samba      | ✔️   | not ready for production |
+
+_Windows only works for 90 days, after that it reboots every 60 minutes.
+Please activate it or reinstall after 90 days._
+
+_Apple silicon and windows ARM are untested, both as host and guest._
+
+Installation instructions:
+--------------------------
+
+- Download and unzip/untargzip in the folder of your choice;
+- Make sure all shell scripts have execute rights (`chmod +x *.sh`);
+- Optionally run `create-network.sh` and `create-storage.sh`;
+- Launch GUI or command line application of your choice;
 
 Instructions for GUI applications:
 ----------------------------------
 
-create vm with: `podman compose --file win7.yaml up`
-stop it: `podman stop win7`
-start it again: `podman start win7`
+- create vm with: `podman compose --file win7.yaml up`
+- stop it: `podman stop win7`
+- start it again: `podman start win7`
 
-win7 can be replaced by any of the .yaml files, e.g. macos11 or android10
+_win7 can be replaced by any of the .yaml files, e.g. macos11 or android10_
 
 Instructions for command line tools:
 ------------------------------------
 
-create vm with: `podman compose --file fedora-clang.yaml up --detach`
-enter it with: `podman exec -it fedora-clang /bin/bash`
-stop it: `podman stop fedora-clang`
+- create vm with: `podman compose --file fedora42-clang.yaml up --detach`
+- enter it with: `podman exec -it fedora42-clang /bin/bash`
+- stop it: `podman stop fedora42-clang`
+- start it again: `podman start fedora42-clang`
 
 Storage:
 --------
@@ -59,7 +95,7 @@ coming from the podman definition and are getting downloaded form the repositori
 An alternate solution is to share a folder in samba on the host system and make it
 available on all virtual machines.
 
-```
+```bash
 ./create_storage.sh
 ```
 
@@ -73,7 +109,7 @@ purpose.
 
 Setting up local network configuration on the host machine can be done with following script:
 
-```
+```bash
 ./create_network.sh
 ```
 
@@ -84,42 +120,20 @@ A sync should take place in between the share folder and the kvms folder so
 scripts can be shared with different environments. Update the `sync_Data.sh` script to change
 the backup or synchronisation location.
 
-Artefacts:
+Artifacts:
 ----------
 
+Please see the [doc/TODO.md](TODO.md) file for a complete list of issues.
+
 - Windows starts rebooting each hour after 90 days. This is by design, you need to activate your
-windows or re-install after 90 days.
-
-- When creating a server with autorestart, no way to stop it without interrupting.
-Unless stopped directive does not seem to do a gracefull stop.
-Configuration is:
-```
-services:
-  restart: unless-stopped
-```
-
-- Creating a folder inside the data disk asigns it to the linux user 166535.
-
-- Windows RDP is not working on Win7.
-
-- Checking health of a container is mandatory before using it in case of tool-containers.
-e.g. `podman healthcheck run fedora-clang`
-It will return unhealthy in case the initialisation script is not finished.
-
-- Windows XP is not accessing shared data folder. Link is invalid as per windows.
+  windows or re-install after 90 days.
 
 - Samba server does require listening on port 445, as a non-root user, this is forbidden.
-Change system as follows, add following line to `/etc/sysctl.conf`:
-```
-net.ipv4.ip_unprivileged_port_start=445
-```
+  Change system as follows, add following line to `/etc/sysctl.conf`:
+  ```
+  net.ipv4.ip_unprivileged_port_start=445
+  ```
   Now issue the following command: `sysctl -p`
-
-- The samba share on the host system is not working yet.
-
-- The samba server project is not working yet.
-
-- The android emulation is not working yet.
 
 FAQ:
 ----
@@ -135,12 +149,12 @@ features that go far beyond xAMP.
 
 This project extends on dockur and proposes real-life examples of this.
 It also supports at the same time Android/Samba and development environments.
-To do the same with docker, you have to install multiple unvetted containers.
+To do the same with docker, you have to install multiple un-vetted containers.
 Here you are in full control.
 
 - What is the security compared to docker?
 
-Docker runs as root, and uses unvetted containers. Here the installation scripts
+Docker runs as root, and uses un-vetted containers. Here the installation scripts
 are available in source code and can be modified or inspected. Podman runs as an
 application and can be disabled simply by stopping the container. A compromised
 container on docker can compromise the complete system. Here, the container source
@@ -151,13 +165,13 @@ is open by default, it does not run until started and has no root priviledges.
 Virtualbox is heavy and needs a lot of maintenance for each environment. Virtualbox
 is also limited to run on the same processor architecture in emulation only.
 Virtualbox does not run command line environments.
-Kvms-easy does allow to run e.g. compilers or toolsets on top of your linux. It
+Kvms-easy does allow to run e.g. compilers or tool-sets on top of your linux. It
 also allows to run ARM on x86 or x86 on ARM hosts. Kvms-easy requires much less
-ressources.
+resources.
 
 - What are unique features of this project?
 
-Can you imagine running windows 10, 7 or macOS on your linux machine in a browser?
+Can you imagine running windows 10, 7 or macOS on your Linux machine in a browser?
 Can you imagine running 2 different kernels or 2 different compiler environments
 with zero install? Yes, kickstart files are not yet in here and iso deployments
 neither, but will come in the next releases.
@@ -175,13 +189,37 @@ After a while, any environment Linux and Windows alike get polluted by installin
 packages or software. After a while, you don't remember what you have installed.
 When setting up my n-th pc, I wanted to avoid to install anything but the standard
 minimal install and get all additional software installed inside software silos.
-The available tools like AppImage/Snap/Flatpack have their own drawbacks.
+The available tools like AppImage/Snap/Flatpak have their own drawbacks.
 I also wanted to reduce disk space and maintenance for all my different VMs. And
 last but not least, I wanted to run different versions of macOS or windows or
 android without the maintenance burden. The real challenge was running android
 ARM on windows boxes without going through the Android developer tools. Another
 challenge was running recent macOS on more performant machines. All this while
 maintaining maximum security and minimal attack surface.
+
+Legacy OSes:
+------------
+
+Following legacy OSes are also supported:
+
+  | **Platform**  | **Status** | **Remarks** |
+  |---|---|---|
+  | Win3.11    | ❌   | |
+  | Win95      | ❌   | |
+  | Win98      | ❌   | |
+  | Win2000    | ✅   | |
+  | WinMe      | ❌   | |
+  | WinXP      | ✔️   | no access to shared data |
+  | WinVista   | ✅   | |
+  | Win7       | ✅   | |
+  | Win8.1     | ✅   | |
+  | macOS10.14 | ❌   | latest version with 32 bit support |
+  | macOS11    | ✅   | |
+  | macOS12    | ✅   | |
+  | macOS13    | ✅   | format disk as macOS extended, using APFS fails |
+  | android9   | ❌   | |
+  | fedora40   | ✅   | clang |
+  | fedora41   | ✅✅ | clang gcc |
 
 Credits:
 --------
@@ -193,13 +231,14 @@ Author:
 -------
 
 Yves De Billoëz
-12-12-2025
+22-12-2025
 
 License:
 --------
 
-This is the [readme.md](readme.md) file for kvms-easy project
-released under GNU - GPL v2.0.
+This is the README.md file for kvms-easy project
+released under the license GNU - GPL v2.0. Please see the 
+[doc/COPYING.md](COPYING.md) file for more information.
 
 Further reading and sources:
 ----------------------------
@@ -215,4 +254,9 @@ that can be found here:
 
 - https://sourceforge.net/projects/belofte/
 
-_File last updated on 12/12/2025_
+## A special thanks to
+
+**Richard Stallman** for his work on GNU in general and his vision
+on free software.
+
+_File last updated on 22/12/2025_

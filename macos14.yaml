@@ -6,8 +6,8 @@ services:
     container_name: macos14
     environment:
       VERSION: "14"
-      RAM_SIZE: "8G"
-      CPU_CORES: "4"
+      RAM_SIZE: "9G"
+      CPU_CORES: "6"
     devices:
       - /dev/kvm
       - /dev/net/tun
@@ -18,5 +18,8 @@ services:
       - 5900:5900/tcp
       - 5900:5900/udp
     volumes:
-      - ./os-disk/macos14:/storage
+      - ./os-disk/macos14:/storage:Z
     stop_grace_period: 2m
+
+x-podman:
+  in_pod: false

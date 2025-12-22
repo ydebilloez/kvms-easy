@@ -7,8 +7,8 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./fedora-clang-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
-      - ./os-disk/fedclang:/workspace:Z
+      - ./config/fedora-clang-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
+      - ./os-disk/fedora41-clang:/workspace:Z
       - ./data-disk:/home/hostuser:Z
     entrypoint: ["container-initialconfig.sh"]
     healthcheck:
@@ -21,8 +21,11 @@ services:
     command: 
       - "/bin/bash"
 
+x-podman:
+  in_pod: false
+
 # check its installation with
-# podman healthcheck run fedora42-clang
+# podman healthcheck run fedora41-clang
 
 # run subsequently with
-# podman exec -it fedora42-clang /bin/bash
+# podman exec -it fedora41-clang /bin/bash

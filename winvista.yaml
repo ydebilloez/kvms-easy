@@ -20,6 +20,10 @@ services:
       - 3389:3389/tcp
       - 3389:3389/udp
     volumes:
-      - ./os-disk/winvista:/storage
+      - ./os-disk/winvista:/storage:Z
       - ./data-disk:/shared
     stop_grace_period: 2m
+
+x-podman:
+  in_pod: false
+  

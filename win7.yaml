@@ -21,7 +21,7 @@ services:
       - 3389:3389/tcp
       - 3389:3389/udp
     volumes:
-      - ./os-disk/win7:/storage
+      - ./os-disk/win7:/storage:Z
       - ./data-disk:/shared
     networks:
       hostonly:
@@ -31,3 +31,6 @@ services:
 networks:
   hostonly:
     driver: bridge
+
+x-podman:
+  in_pod: false

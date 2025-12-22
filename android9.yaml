@@ -22,3 +22,6 @@ services:
       - ./os-disk/android9:/storage
     shm_size: '2gb' # Recommended for emulator performance
     stop_grace_period: 2m
+
+x-podman:
+  in_pod: false

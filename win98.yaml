@@ -3,11 +3,10 @@ version: '3.8'
 services:
   windows:
     image: docker.io/dockurr/windows
-    container_name: win11
+    container_name: win98
     environment:
-      VERSION: "11"
-      RAM_SIZE: "8G"
-      CPU_CORES: "4"
+      VERSION: "98"
+      DISK_SIZE: "32G"
       REGION: "en-UK"
       KEYBOARD: "en-UK"
       USERNAME: "user"
@@ -22,8 +21,7 @@ services:
       - 3389:3389/tcp
       - 3389:3389/udp
     volumes:
-      - ./os-disk/disk/win11:/storage:Z
-      - ./data-disk:/shared
+      - ./os-disk/win98:/storage:Z
     stop_grace_period: 2m
 
 x-podman:

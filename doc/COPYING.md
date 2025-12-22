@@ -1,7 +1,7 @@
 # Copying
 @brief License information, warranty and credits
 
-This is the [COPYING.md](COPYING.md) file for kvms-easy project
+This is the COPYING.md file for kvms-easy project
 released under GNU - GPL v2.0.
 
 <!-- SPDX-License-Identifier: GPL-2.0-only -->

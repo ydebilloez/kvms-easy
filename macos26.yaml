@@ -3,9 +3,9 @@ version: '3.8'
 services:
   macos:
     image: docker.io/dockurr/macos
-    container_name: macos12
+    container_name: macos26
     environment:
-      VERSION: "12"
+      VERSION: "26"
       RAM_SIZE: "9G"
       CPU_CORES: "6"
     devices:
@@ -18,7 +18,7 @@ services:
       - 5900:5900/tcp
       - 5900:5900/udp
     volumes:
-      - ./os-disk/macos12:/storage:Z
+      - ./os-disk/macos26:/storage:Z
     stop_grace_period: 2m
 
 x-podman:

@@ -18,7 +18,7 @@ fi
 
 if [ ! -L "${SHAREDSTORAGE}" ] && ! [ -e "${SHAREDSTORAGE}" ]; then
   echo Creating symlink to shared storage
-  ln -s ${SHAREDSTORLOCATION}/volumes/${SHAREDSTORAGENAME}/_data/ ${SHAREDSTORAGE}
+  ln -s ${SHAREDSTORLOCATION}/volumes/${SHAREDSTORAGENAME}/_data ${SHAREDSTORAGE}
 fi
 
 if [ ! -d "${OSDISK}" ]; then

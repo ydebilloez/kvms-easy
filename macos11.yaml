@@ -18,5 +18,8 @@ services:
       - 5900:5900/tcp
       - 5900:5900/udp
     volumes:
-      - ./os-disk/macos11:/storage
+      - ./os-disk/macos11:/storage:Z
     stop_grace_period: 2m
+
+x-podman:
+  in_pod: false
