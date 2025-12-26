@@ -7,7 +7,7 @@ services:
     ports:
       - "5554:5554" # ADB port
       - "5555:5555" # ADB port
-      - "6080:6080" # VNC port (if using VNC)
+      - "8006:6080" # VNC port
     environment:
       - EMULATOR_DEVICE=Samsung Galaxy S10
       - WEB_VNC=true
@@ -16,6 +16,8 @@ services:
       - /dev/kvm
     volumes:
       - ./os-disk/android11:/storage
+    #  - ./os-disk/android11:/home/androidusr
+    # adding above line prevents android from booting
     stop_grace_period: 2m
 
 x-podman:
