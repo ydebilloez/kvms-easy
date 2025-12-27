@@ -3,15 +3,17 @@ version: '3.8'
 services:
   android-emulator:
     image: docker.io/budtmo/docker-android:emulator_11.0
+    privileged: true
     container_name: android11
     ports:
       - "5554:5554" # ADB port
       - "5555:5555" # ADB port
       - "8006:6080" # VNC port
     environment:
-      - EMULATOR_DEVICE=Samsung Galaxy S10
+      - EMULATOR_DEVICE="Samsung Galaxy S10"
       - WEB_VNC=true
       - ADB_PORT=5555
+      - DISPLAY=:1
     devices:
       - /dev/kvm
     volumes:
