@@ -29,8 +29,10 @@ if [ ! -d "${DATADISK}" ]; then
   mkdir -p ${DATADISK}
 fi
 
-#mkdir -p ${DATADISK}/teststoragecreationfolder
-#touch ${DATADISK}/teststoragefile
+#echo Create some files in different storage locations for testing
+#mkdir -p ${DATADISK}/.teststoragecreationfolder
+#touch ${DATADISK}/.teststoragefile
+#touch ${SHAREDSTORAGE}/.testsharedstoragefile
 
 echo Volumes are stored in : ${SHAREDSTORLOCATION}
 
@@ -38,5 +40,9 @@ podman volume exists ${SHAREDSTORAGENAME}
 if [ $? -eq 0 ]; then
   echo Volume ${SHAREDSTORAGENAME} already exists
 else
-  podman volume create ${SHAREDSTORAGENAME}
+  podman volume create \
+      --opt type=none \
+      --opt o=bind \
+      --opt device=${SHAREDSTORAGE} \
+      ${SHAREDSTORAGENAME}
 fi

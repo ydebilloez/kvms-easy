@@ -9,6 +9,7 @@ services:
     volumes:
       - ./config/fedora-belofte-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
       - ./data-disk:/home/hostuser:Z
+      - sharedstorage:/shared:Z
     entrypoint: ["container-initialconfig.sh"]
     healthcheck:
       # wait some time for installation
@@ -19,6 +20,9 @@ services:
       start_period: 60s
     command: 
       - "/bin/bash"
+
+volumes:
+  sharedstorage:
 
 x-podman:
   in_pod: false
