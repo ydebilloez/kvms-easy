@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  ubuntu-server:
+    image: docker.io/qemux/qemu
+    container_name: ubuntus
+    environment:
+      DEBUG: "Y"
+      BOOT: "ubuntus"
+      RAM_SIZE: "8G"
+      CPU_CORES: "4"
+      # DHCP: "Y"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+      - /dev/vhost-net
+    device_cgroup_rules:
+      - 'c *:* rwm'
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+    volumes:
+      - ./os-disk/ubuntus:/storage:Z
+      - ./data-disk:/shared:Z
+      # issue mount -t 9p -o trans=virtio shared /mnt/data-disk
+    stop_grace_period: 2m
+
+x-podman:
+  in_pod: false
