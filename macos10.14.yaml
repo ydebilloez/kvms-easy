@@ -3,11 +3,12 @@ version: '3.8'
 services:
   macos:
     image: docker.io/dockurr/macos
-    container_name: macos10.15
+    container_name: macos10.14
+    privileged: true
     environment:
-      VERSION: "10.15"
+      VERSION: "10.14"
       RAM_SIZE: "8G"
-      CPU_CORES: "4"
+      CPU_CORES: "1"
     devices:
       - /dev/kvm
       - /dev/net/tun
@@ -17,9 +18,6 @@ services:
       - 8006:8006
       - 5900:5900/tcp
       - 5900:5900/udp
-    volumes:
-      - ./os-disk/macos10.15:/storage:Z
-    stop_grace_period: 2m
 
 x-podman:
   in_pod: false

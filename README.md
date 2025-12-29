@@ -205,21 +205,25 @@ Following legacy OSes are also supported:
   | **Platform**  | **Status** | **Remarks** |
   |---|---|---|
   | Win3.11    | ❌   | |
-  | Win95      | ❌   | |
-  | Win98      | ❌   | |
+  | Win95      | ❔   | see https://github.com/felixrieseberg/windows95 |
+  | Win98      | ❔   | see https://github.com/theonemule/x86box-docker |
   | Win2000    | ✅   | |
   | WinMe      | ❌   | |
   | WinXP      | ✔️   | no access to shared data |
   | WinVista   | ✅   | |
   | Win7       | ✅   | |
   | Win8.1     | ✅   | |
-  | macOS10.14 | ❌   | latest version with 32 bit support |
+  | macOS10.13 | ❌   | keyboard and mouse inactive, impossible to install |
+  | macOS10.14 | ❌   | keyboard and mouse inactive, impossible to install |
+  | macOS10.15 | ❌   | keyboard and mouse inactive, impossible to install |
   | macOS11    | ✅   | |
   | macOS12    | ✅   | |
   | macOS13    | ✅   | format disk as macOS extended, using APFS fails |
   | android9   | ❌   | |
   | fedora40   | ✅   | clang |
   | fedora41   | ✅✅ | clang gcc |
+
+_macOS 10.14 is the latest version that supports running 32 bit programs._
 
 Credits:
 --------
