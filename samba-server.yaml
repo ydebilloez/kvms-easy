@@ -7,8 +7,12 @@ services:
     network_mode: host
     cap_add:
       - CAP_NET_ADMIN
+
     environment:
-      MODEL: TimeCapsule
+      DISABLE_FRUIT_DEFAULTS: disabled
+      AVAHI_DISABLE: disabled
+
+      MODEL: XYZ_TimeCapsule
       AVAHI_NAME: Network disk
 
       SAMBA_CONF_SERVER_STRING: NetworkDisk
@@ -32,13 +36,19 @@ services:
 
       SAMBA_VOLUME_CONFIG_guest: |
         [guest]
-        path=/shares
+        path=/shared
         read only = no
         guest ok = yes
         guest only = yes
 
     volumes:
+      - ./config/samba-server-initialconfig.sh:/usr/local/bin/container-initialconfig.sh:Z
+      - ./os-disk/samba-server:/workspace:Z
       - ./data-disk:/share:Z
+      - sharedstorage:/shared:Z
+
+volumes:
+  sharedstorage:
 
 x-podman:
   in_pod: false
