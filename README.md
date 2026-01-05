@@ -135,6 +135,12 @@ Please see the [doc/TODO.md](TODO.md) file for a complete list of issues.
   ```
   Now issue the following command: `sysctl -p`
 
+- Kvms-easy and VirtualBox compete for KVM exclusivity. As such, after activating Podman,
+  VirtualBox does no longer run unless KVM usage for podman has been disabled.
+  Other virtualisation solutions such as Boxes does not have this ressource conflict.
+  Solution is not to use both at the same time or switch to another virtualisation
+  option.
+
 FAQ:
 ----
 
