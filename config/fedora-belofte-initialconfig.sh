@@ -20,6 +20,8 @@ if ! command -v clang &> /dev/null; then
     dnf --quiet install -y mingw32-gcc mingw32-gcc-c++ mingw64-gcc mingw64-gcc-c++ mingw32-winpthreads-static mingw64-winpthreads-static
     # install doxygen
     dnf --quiet install -y doxygen
+    # install ronn and man
+    dnf --quiet install -y ronn man
     # install cppcheck
     dnf --quiet install -y cppcheck
 
