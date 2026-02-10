@@ -12,6 +12,8 @@ if ! command -v clang &> /dev/null; then
     dnf --quiet install -y git
     # install clang and gcc
     dnf --quiet install -y clang clang-tools-extra glibc-static libstdc++-static
+    # install PGO
+    dnf --quiet install -y llvm-profdata
     # gcc 32 bit support
     dnf --quiet install -y glibc-devel.i686 glibc-static.i686
     # clang 32 bit support
